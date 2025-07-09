@@ -6,3 +6,39 @@
   <li> <a href="https://www.zhihu.com/people/AJLoveChina">知乎</a> </li>
   <li> <a href="http://hejie.nigeerhuo.com">我的博客(已经不更细了,现在在知乎写文章)</a> </li>
 </ul>
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>点击变色按钮</title>
+  <!-- CSS 部分：使用 <style> 标签 -->
+  <style>
+    #myButton {
+      background-color: blue;  /* 初始背景色为蓝色 */
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <!-- HTML 部分：定义按钮 -->
+  <button id="myButton">点击我</button>
+
+  <!-- JavaScript 部分：使用 <script> 标签 -->
+  <script>
+    // 获取按钮元素
+    const button = document.getElementById('myButton');
+    
+    // 添加点击事件监听器
+    button.addEventListener('click', function() {
+      // 点击后将背景色改为红色
+      this.style.backgroundColor = 'red';
+    });
+  </script>
+</body>
+</html>
