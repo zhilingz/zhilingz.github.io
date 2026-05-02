@@ -1,141 +1,147 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Talk to Zhiling Zhang</title>
-  <style>
-    :root {
-      --bg: #f8f7f2;
-      --panel: #ffffff;
-      --text: #202020;
-      --muted: #68645d;
-      --line: #dedbd2;
-      --accent: #0b6f68;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-    main {
-      width: min(760px, calc(100% - 32px));
-      margin: 0 auto;
-      padding: 40px 0;
-    }
-    header {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 18px;
-      margin-bottom: 22px;
-    }
-    h1 {
-      margin: 0;
-      font-size: 1.5rem;
-      letter-spacing: 0;
-    }
-    a {
-      color: var(--accent);
-      text-decoration-thickness: 1px;
-      text-underline-offset: 3px;
-      white-space: nowrap;
-    }
-    .chat {
-      min-height: 420px;
-      padding: 18px;
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-    }
-    .msg {
-      width: fit-content;
-      max-width: min(92%, 620px);
-      margin: 0 0 12px;
-      padding: 10px 12px;
-      border-radius: 8px;
-      background: #f1efe8;
-    }
-    .msg.user {
-      margin-left: auto;
-      background: #e3f0ed;
-    }
-    .choices {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 16px;
-    }
-    button {
-      min-height: 38px;
-      padding: 8px 12px;
-      border: 1px solid var(--accent);
-      border-radius: 6px;
-      background: transparent;
-      color: var(--accent);
-      font: inherit;
-      cursor: pointer;
-    }
-    button:hover { background: #e3f0ed; }
-    footer {
-      margin-top: 14px;
-      color: var(--muted);
-      font-size: .92rem;
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>与张志凌对话</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "Helvetica Neue", "Segoe UI", Arial, sans-serif;
+    background: #fff;
+    color: #222;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container {
+    text-align: center;
+    padding: 2rem;
+    width: min(680px, 100%);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .name-cn {
+    font-family: "Songti SC", "STSong", "SimSun", serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: #111;
+    letter-spacing: 0.2em;
+  }
+  .name-en {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #555;
+    margin-top: 0.4rem;
+    letter-spacing: 0.08em;
+  }
+  .chat-title {
+    margin-top: 1.8rem;
+    color: #999;
+    font-family: "Songti SC", "STSong", "SimSun", serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.12em;
+  }
+  .chat-title ruby rt {
+    font-size: 0.5em;
+    color: #bbb;
+    letter-spacing: 0.06em;
+    font-weight: 400;
+  }
+  .choices {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.2rem;
+    margin-top: 2.2rem;
+  }
+  button {
+    border: 0;
+    background: transparent;
+    color: #bbb;
+    cursor: pointer;
+    font: 0.8rem/1.4 -apple-system, "Helvetica Neue", "Segoe UI", sans-serif;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+  button:hover { color: #555; }
+  .answer {
+    width: min(520px, 100%);
+    margin-top: 2.4rem;
+    color: #777;
+    font-size: 0.86rem;
+    line-height: 1.9;
+    letter-spacing: 0.02em;
+    min-height: 6.8rem;
+  }
+  .answer.slide {
+    animation: slideIn 0.36s ease both;
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .home {
+    margin-top: 2rem;
+  }
+  .home a {
+    color: #bbb;
+    text-decoration: none;
+    border-bottom: 1px solid #e8e8e8;
+    padding-bottom: 1px;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .home a:hover {
+    color: #666;
+    border-color: #999;
+  }
+</style>
 </head>
 <body>
-  <main>
-    <header>
-      <h1>Talk to Zhiling Zhang</h1>
-      <a href="/">Home</a>
-    </header>
-    <section class="chat" id="chat" aria-live="polite"></section>
-    <footer>This is a static profile agent. It answers from <a href="/llms.txt">llms.txt</a>.</footer>
-  </main>
-  <script>
-    const answers = {
-      education: "Zhiling Zhang studied at the University of Science and Technology of China for all three stages: BS in Information Security from 2018 to 2022, MS in Cybersecurity from 2022 to 2025, and PhD in Cybersecurity from 2025 to 2028.",
-      advisors: "For the PhD stage, Zhiling is jointly trained with Beijing Zhongguancun Academy. The advisors are Jiyan He and Weiming Zhang. For the MS stage, the advisors were Weiming Zhang and Wenbo Zhou.",
-      research: "Zhiling works on AI security and privacy, including facial privacy protection, privacy-preserving GUI agents, and robust watermarking for AI-edited images.",
-      contact: "You can contact Zhiling by email at 784405268@qq.com or visit GitHub at https://github.com/zhilingz.",
-      publications: "Publications and projects will be added later."
-    };
-    const labels = {
-      education: "Education",
-      advisors: "Advisors",
-      research: "Research",
-      contact: "Contact",
-      publications: "Publications and projects"
-    };
-    const chat = document.getElementById("chat");
-    function addMessage(text, cls) {
-      const node = document.createElement("p");
-      node.className = cls ? `msg ${cls}` : "msg";
-      node.textContent = text;
-      chat.appendChild(node);
-    }
-    function addChoices() {
-      const wrap = document.createElement("div");
-      wrap.className = "choices";
-      Object.keys(labels).forEach((key) => {
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.textContent = labels[key];
-        btn.addEventListener("click", () => {
-          wrap.remove();
-          addMessage(labels[key], "user");
-          addMessage(answers[key]);
-          addChoices();
-        });
-        wrap.appendChild(btn);
-      });
-      chat.appendChild(wrap);
-    }
-    addMessage("Hi, I am Zhiling Zhang's profile agent. What would you like to know?");
-    addChoices();
-  </script>
+<div class="container">
+  <div class="name-cn">张志凌</div>
+  <div class="name-en">Zhiling Zhang</div>
+  <div class="chat-title">与<ruby><strong>张志凌</strong><rt>Agent</rt></ruby>对话</div>
+  <div class="choices" id="choices"></div>
+  <div class="answer" id="answer">你好。我是张志凌的个人主页 Agent，可以回答教育经历、导师、研究方向和联系方式。</div>
+  <div class="home"><a href="/">返回主页</a></div>
+</div>
+<script>
+  const answers = {
+    education: "张志凌目前为中国科学技术大学网络空间安全博士生，2025-2028 年博士联合培养。本科为中国科学技术大学信息安全专业，硕士为中国科学技术大学网络空间安全专业。",
+    advisors: "博士阶段为北京中关村学院与中国科学技术大学联合培养，导师为何纪言和张卫明。硕士阶段导师为张卫明和周文柏。",
+    research: "主要关注 AI security and privacy，包括人脸隐私保护、GUI Agent 隐私保护，以及面向 AI 图像编辑的鲁棒水印。",
+    links: "Scholar: https://scholar.google.com/citations?user=A_vVS4gAAAAJ。GitHub: https://github.com/zhilingz。"
+  };
+  const labels = {
+    education: "教育经历",
+    advisors: "导师",
+    research: "研究方向",
+    links: "链接"
+  };
+  const choices = document.getElementById("choices");
+  const answer = document.getElementById("answer");
+  Object.keys(labels).forEach((key) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = labels[key];
+    button.addEventListener("click", () => {
+      answer.classList.remove("slide");
+      void answer.offsetWidth;
+      answer.textContent = answers[key];
+      answer.classList.add("slide");
+    });
+    choices.appendChild(button);
+  });
+</script>
 </body>
 </html>
