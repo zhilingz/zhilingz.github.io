@@ -85,6 +85,10 @@
     border-top-right-radius: 4px;
     color: #444;
   }
+  .message.error {
+    background: #fff7f7;
+    color: #9a5555;
+  }
   .followups {
     display: flex;
     flex-wrap: wrap;
@@ -172,38 +176,13 @@
   <div class="home"><a href="/">返回主页</a></div>
 </div>
 <script>
-  const data = {
-    education: {
-      patterns: ["教育", "经历", "本科", "硕士", "博士", "ustc", "中国科学技术大学"],
-      answer: "张志凌目前为中国科学技术大学网络空间安全博士生，2025-2028 年博士联合培养。本科为中国科学技术大学信息安全专业，硕士为中国科学技术大学网络空间安全专业。",
-      followups: ["导师是谁？", "研究方向是什么？", "Scholar 链接是什么？"]
-    },
-    advisors: {
-      patterns: ["导师", "何纪言", "张卫明", "周文柏"],
-      answer: "博士阶段为北京中关村学院与中国科学技术大学联合培养，导师为何纪言和张卫明。硕士阶段导师为张卫明和周文柏。",
-      followups: ["博士联合培养是什么？", "研究方向是什么？", "GitHub 在哪里？"]
-    },
-    research: {
-      patterns: ["研究", "方向", "ai", "security", "privacy", "隐私", "水印", "gui"],
-      answer: "主要关注 AI security and privacy，包括人脸隐私保护、GUI Agent 隐私保护，以及面向 AI 图像编辑的鲁棒水印。",
-      followups: ["教育经历是什么？", "导师是谁？", "有哪些链接？"]
-    },
-    links: {
-      patterns: ["链接", "github", "scholar", "主页", "代码"],
-      answer: "Scholar: https://scholar.google.com/citations?user=A_vVS4gAAAAJ。GitHub: https://github.com/zhilingz。",
-      followups: ["研究方向是什么？", "教育经历是什么？", "导师是谁？"]
-    },
-    joint: {
-      patterns: ["联合培养", "中关村", "北京中关村学院"],
-      answer: "博士阶段为北京中关村学院与中国科学技术大学联合培养。",
-      followups: ["导师是谁？", "教育经历是什么？", "研究方向是什么？"]
-    }
-  };
+  const apiBase = window.CHAT_API_BASE || "";
   const defaults = ["教育经历是什么？", "导师是谁？", "研究方向是什么？", "有哪些链接？"];
   const messages = document.getElementById("messages");
   const followups = document.getElementById("followups");
   const form = document.getElementById("chat-form");
   const input = document.getElementById("user-input");
+  const history = [];
 
   function addMessage(text, type) {
     const node = document.createElement("div");
@@ -211,14 +190,6 @@
     node.textContent = text;
     messages.appendChild(node);
     messages.scrollTop = messages.scrollHeight;
-  }
-
-  function matchAnswer(text) {
-    const q = text.toLowerCase();
-    return Object.values(data).find((item) => item.patterns.some((pattern) => q.includes(pattern.toLowerCase()))) || {
-      answer: "这个信息还没有加入主页资料。你可以先问教育经历、导师、研究方向或相关链接。",
-      followups: defaults
-    };
   }
 
   function renderFollowups(items) {
@@ -236,12 +207,40 @@
     const query = text.trim();
     if (!query) return;
     addMessage(query, "user");
-    const result = matchAnswer(query);
-    setTimeout(() => {
-      addMessage(result.answer, "agent");
-      renderFollowups(result.followups);
-    }, 120);
+    history.push({ role: "user", content: query });
+    requestAnswer();
     input.value = "";
+  }
+
+  async function requestAnswer() {
+    renderFollowups([]);
+    input.disabled = true;
+    const waiting = document.createElement("div");
+    waiting.className = "message agent";
+    waiting.textContent = "正在思考...";
+    messages.appendChild(waiting);
+    messages.scrollTop = messages.scrollHeight;
+
+    try {
+      const response = await fetch(`${apiBase}/api/chat`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: history })
+      });
+      if (!response.ok) throw new Error("request_failed");
+      const data = await response.json();
+      const answer = data.answer || "该信息尚未添加。";
+      waiting.textContent = answer;
+      history.push({ role: "assistant", content: answer });
+      renderFollowups(defaults);
+    } catch (error) {
+      waiting.remove();
+      addMessage("后端暂未连接。请部署 server/ 后端并配置服务端密钥。", "error");
+      renderFollowups(defaults);
+    } finally {
+      input.disabled = false;
+      input.focus();
+    }
   }
 
   form.addEventListener("submit", (event) => {
