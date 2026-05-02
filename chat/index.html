@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Talk to Zhiling Zhang</title>
+  <style>
+    :root {
+      --bg: #f8f7f2;
+      --panel: #ffffff;
+      --text: #202020;
+      --muted: #68645d;
+      --line: #dedbd2;
+      --accent: #0b6f68;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    main {
+      width: min(760px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 40px 0;
+    }
+    header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      letter-spacing: 0;
+    }
+    a {
+      color: var(--accent);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+      white-space: nowrap;
+    }
+    .chat {
+      min-height: 420px;
+      padding: 18px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    .msg {
+      width: fit-content;
+      max-width: min(92%, 620px);
+      margin: 0 0 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: #f1efe8;
+    }
+    .msg.user {
+      margin-left: auto;
+      background: #e3f0ed;
+    }
+    .choices {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    button {
+      min-height: 38px;
+      padding: 8px 12px;
+      border: 1px solid var(--accent);
+      border-radius: 6px;
+      background: transparent;
+      color: var(--accent);
+      font: inherit;
+      cursor: pointer;
+    }
+    button:hover { background: #e3f0ed; }
+    footer {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Talk to Zhiling Zhang</h1>
+      <a href="/">Home</a>
+    </header>
+    <section class="chat" id="chat" aria-live="polite"></section>
+    <footer>This is a static profile agent. It answers from <a href="/llms.txt">llms.txt</a>.</footer>
+  </main>
+  <script>
+    const answers = {
+      education: "Zhiling Zhang studied at the University of Science and Technology of China for all three stages: BS in Information Security from 2018 to 2022, MS in Cybersecurity from 2022 to 2025, and PhD in Cybersecurity from 2025 to 2028.",
+      advisors: "For the PhD stage, Zhiling is jointly trained with Beijing Zhongguancun Academy. The advisors are Jiyan He and Weiming Zhang. For the MS stage, the advisors were Weiming Zhang and Wenbo Zhou.",
+      research: "Zhiling works on AI security and privacy, including facial privacy protection, privacy-preserving GUI agents, and robust watermarking for AI-edited images.",
+      contact: "You can contact Zhiling by email at 784405268@qq.com or visit GitHub at https://github.com/zhilingz.",
+      publications: "Publications and projects will be added later."
+    };
+    const labels = {
+      education: "Education",
+      advisors: "Advisors",
+      research: "Research",
+      contact: "Contact",
+      publications: "Publications and projects"
+    };
+    const chat = document.getElementById("chat");
+    function addMessage(text, cls) {
+      const node = document.createElement("p");
+      node.className = cls ? `msg ${cls}` : "msg";
+      node.textContent = text;
+      chat.appendChild(node);
+    }
+    function addChoices() {
+      const wrap = document.createElement("div");
+      wrap.className = "choices";
+      Object.keys(labels).forEach((key) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.textContent = labels[key];
+        btn.addEventListener("click", () => {
+          wrap.remove();
+          addMessage(labels[key], "user");
+          addMessage(answers[key]);
+          addChoices();
+        });
+        wrap.appendChild(btn);
+      });
+      chat.appendChild(wrap);
+    }
+    addMessage("Hi, I am Zhiling Zhang's profile agent. What would you like to know?");
+    addChoices();
+  </script>
+</body>
+</html>
