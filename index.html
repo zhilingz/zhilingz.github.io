@@ -113,7 +113,7 @@
 </head>
 <body>
 <div class="container">
-  <img class="portrait" src="image/0397AA94-D79F-4E3D-B793-C39C1106DC2A.PNG" alt="张志凌">
+  <img class="portrait" id="portrait" src="image/0397AA94-D79F-4E3D-B793-C39C1106DC2A.PNG" alt="张志凌">
   <div class="name-cn">张志凌</div>
   <div class="name-en">Zhiling Zhang</div>
   <div class="role">AI Security and Privacy</div>
@@ -124,5 +124,13 @@
   <div class="affiliation"><a href="https://www.bza.edu.cn/" target="_blank">北京中关村学院</a> × <a href="https://www.ustc.edu.cn/" target="_blank">中国科学技术大学</a>（博士联合培养）</div>
   <div class="chat"><a href="/chat/">与<ruby><strong>张志凌</strong><rt>Agent</rt></ruby>对话 →</a></div>
 </div>
+<script>
+  const portraits = [
+    "image/0397AA94-D79F-4E3D-B793-C39C1106DC2A.PNG",
+    "image/4088C9E6-DFDB-4BC8-9B91-2A577787C73C.PNG"
+  ];
+  const portrait = document.getElementById("portrait");
+  portrait.src = portraits[Math.floor(Math.random() * portraits.length)];
+</script>
 </body>
 </html>
