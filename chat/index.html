@@ -18,35 +18,33 @@
     -webkit-font-smoothing: antialiased;
   }
   .container {
-    text-align: center;
+    width: min(720px, 100%);
     padding: 2rem;
-    width: min(680px, 100%);
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  }
+  .head {
+    text-align: center;
+    margin-bottom: 1.8rem;
   }
   .name-cn {
     font-family: "Songti SC", "STSong", "SimSun", serif;
-    font-size: 1.6rem;
+    font-size: 1.35rem;
     font-weight: 400;
     color: #111;
     letter-spacing: 0.2em;
   }
   .name-en {
     font-family: Georgia, "Times New Roman", serif;
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 400;
     color: #555;
-    margin-top: 0.4rem;
+    margin-top: 0.3rem;
     letter-spacing: 0.08em;
   }
   .chat-title {
-    margin-top: 1.8rem;
+    margin-top: 1.1rem;
     color: #999;
     font-family: "Songti SC", "STSong", "SimSun", serif;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     letter-spacing: 0.12em;
   }
   .chat-title ruby rt {
@@ -55,41 +53,85 @@
     letter-spacing: 0.06em;
     font-weight: 400;
   }
-  .choices {
+  .panel {
+    border: 1px solid #f0f0f0;
+    border-radius: 18px;
+    padding: 1rem;
+  }
+  .messages {
+    height: min(52vh, 440px);
+    min-height: 320px;
+    overflow-y: auto;
+    padding: 0.4rem;
+  }
+  .message {
+    width: fit-content;
+    max-width: 82%;
+    margin-bottom: 0.9rem;
+    padding: 0.72rem 0.9rem;
+    border-radius: 16px;
+    font-size: 0.86rem;
+    line-height: 1.75;
+    color: #666;
+    animation: slideIn 0.28s ease both;
+  }
+  .message.agent {
+    background: #fafafa;
+    border-top-left-radius: 4px;
+  }
+  .message.user {
+    margin-left: auto;
+    background: #f4f4f4;
+    border-top-right-radius: 4px;
+    color: #444;
+  }
+  .followups {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    gap: 1.2rem;
-    margin-top: 2.2rem;
+    gap: 0.7rem;
+    padding: 0.2rem 0.4rem 0.9rem;
   }
-  button {
+  .followups button {
+    border: 1px solid #eee;
+    border-radius: 999px;
+    background: #fff;
+    color: #999;
+    padding: 0.45rem 0.75rem;
+    cursor: pointer;
+    font: 0.76rem/1.4 -apple-system, "Helvetica Neue", "Segoe UI", sans-serif;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .followups button:hover {
+    color: #555;
+    border-color: #ccc;
+  }
+  form {
+    display: flex;
+    gap: 0.7rem;
+    border-top: 1px solid #f2f2f2;
+    padding: 0.9rem 0.4rem 0;
+  }
+  input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    color: #555;
+    font: 0.86rem/1.5 -apple-system, "Helvetica Neue", "Segoe UI", sans-serif;
+  }
+  input::placeholder { color: #c8c8c8; }
+  form button {
     border: 0;
     background: transparent;
-    color: #bbb;
+    color: #999;
     cursor: pointer;
-    font: 0.8rem/1.4 -apple-system, "Helvetica Neue", "Segoe UI", sans-serif;
-    letter-spacing: 0.05em;
+    font: 0.82rem/1.5 -apple-system, "Helvetica Neue", "Segoe UI", sans-serif;
     transition: color 0.2s;
   }
-  button:hover { color: #555; }
-  .answer {
-    width: min(520px, 100%);
-    margin-top: 2.4rem;
-    color: #777;
-    font-size: 0.86rem;
-    line-height: 1.9;
-    letter-spacing: 0.02em;
-    min-height: 6.8rem;
-  }
-  .answer.slide {
-    animation: slideIn 0.36s ease both;
-  }
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateY(14px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  form button:hover { color: #444; }
   .home {
-    margin-top: 2rem;
+    margin-top: 1.4rem;
+    text-align: center;
   }
   .home a {
     color: #bbb;
@@ -104,44 +146,110 @@
     color: #666;
     border-color: #999;
   }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 </style>
 </head>
 <body>
 <div class="container">
-  <div class="name-cn">张志凌</div>
-  <div class="name-en">Zhiling Zhang</div>
-  <div class="chat-title">与<ruby><strong>张志凌</strong><rt>Agent</rt></ruby>对话</div>
-  <div class="choices" id="choices"></div>
-  <div class="answer" id="answer">你好。我是张志凌的个人主页 Agent，可以回答教育经历、导师、研究方向和联系方式。</div>
+  <div class="head">
+    <div class="name-cn">张志凌</div>
+    <div class="name-en">Zhiling Zhang</div>
+    <div class="chat-title">与<ruby><strong>张志凌</strong><rt>Agent</rt></ruby>对话</div>
+  </div>
+  <div class="panel">
+    <div class="messages" id="messages" aria-live="polite">
+      <div class="message agent">你好。我是张志凌的个人主页 Agent。你可以问我教育经历、导师、研究方向和相关链接。</div>
+    </div>
+    <div class="followups" id="followups"></div>
+    <form id="chat-form">
+      <input id="user-input" autocomplete="off" placeholder="输入问题，或点击上方推荐问题">
+      <button type="submit">发送</button>
+    </form>
+  </div>
   <div class="home"><a href="/">返回主页</a></div>
 </div>
 <script>
-  const answers = {
-    education: "张志凌目前为中国科学技术大学网络空间安全博士生，2025-2028 年博士联合培养。本科为中国科学技术大学信息安全专业，硕士为中国科学技术大学网络空间安全专业。",
-    advisors: "博士阶段为北京中关村学院与中国科学技术大学联合培养，导师为何纪言和张卫明。硕士阶段导师为张卫明和周文柏。",
-    research: "主要关注 AI security and privacy，包括人脸隐私保护、GUI Agent 隐私保护，以及面向 AI 图像编辑的鲁棒水印。",
-    links: "Scholar: https://scholar.google.com/citations?user=A_vVS4gAAAAJ。GitHub: https://github.com/zhilingz。"
+  const data = {
+    education: {
+      patterns: ["教育", "经历", "本科", "硕士", "博士", "ustc", "中国科学技术大学"],
+      answer: "张志凌目前为中国科学技术大学网络空间安全博士生，2025-2028 年博士联合培养。本科为中国科学技术大学信息安全专业，硕士为中国科学技术大学网络空间安全专业。",
+      followups: ["导师是谁？", "研究方向是什么？", "Scholar 链接是什么？"]
+    },
+    advisors: {
+      patterns: ["导师", "何纪言", "张卫明", "周文柏"],
+      answer: "博士阶段为北京中关村学院与中国科学技术大学联合培养，导师为何纪言和张卫明。硕士阶段导师为张卫明和周文柏。",
+      followups: ["博士联合培养是什么？", "研究方向是什么？", "GitHub 在哪里？"]
+    },
+    research: {
+      patterns: ["研究", "方向", "ai", "security", "privacy", "隐私", "水印", "gui"],
+      answer: "主要关注 AI security and privacy，包括人脸隐私保护、GUI Agent 隐私保护，以及面向 AI 图像编辑的鲁棒水印。",
+      followups: ["教育经历是什么？", "导师是谁？", "有哪些链接？"]
+    },
+    links: {
+      patterns: ["链接", "github", "scholar", "主页", "代码"],
+      answer: "Scholar: https://scholar.google.com/citations?user=A_vVS4gAAAAJ。GitHub: https://github.com/zhilingz。",
+      followups: ["研究方向是什么？", "教育经历是什么？", "导师是谁？"]
+    },
+    joint: {
+      patterns: ["联合培养", "中关村", "北京中关村学院"],
+      answer: "博士阶段为北京中关村学院与中国科学技术大学联合培养。",
+      followups: ["导师是谁？", "教育经历是什么？", "研究方向是什么？"]
+    }
   };
-  const labels = {
-    education: "教育经历",
-    advisors: "导师",
-    research: "研究方向",
-    links: "链接"
-  };
-  const choices = document.getElementById("choices");
-  const answer = document.getElementById("answer");
-  Object.keys(labels).forEach((key) => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.textContent = labels[key];
-    button.addEventListener("click", () => {
-      answer.classList.remove("slide");
-      void answer.offsetWidth;
-      answer.textContent = answers[key];
-      answer.classList.add("slide");
+  const defaults = ["教育经历是什么？", "导师是谁？", "研究方向是什么？", "有哪些链接？"];
+  const messages = document.getElementById("messages");
+  const followups = document.getElementById("followups");
+  const form = document.getElementById("chat-form");
+  const input = document.getElementById("user-input");
+
+  function addMessage(text, type) {
+    const node = document.createElement("div");
+    node.className = `message ${type}`;
+    node.textContent = text;
+    messages.appendChild(node);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function matchAnswer(text) {
+    const q = text.toLowerCase();
+    return Object.values(data).find((item) => item.patterns.some((pattern) => q.includes(pattern.toLowerCase()))) || {
+      answer: "这个信息还没有加入主页资料。你可以先问教育经历、导师、研究方向或相关链接。",
+      followups: defaults
+    };
+  }
+
+  function renderFollowups(items) {
+    followups.innerHTML = "";
+    items.forEach((text) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.textContent = text;
+      button.addEventListener("click", () => ask(text));
+      followups.appendChild(button);
     });
-    choices.appendChild(button);
+  }
+
+  function ask(text) {
+    const query = text.trim();
+    if (!query) return;
+    addMessage(query, "user");
+    const result = matchAnswer(query);
+    setTimeout(() => {
+      addMessage(result.answer, "agent");
+      renderFollowups(result.followups);
+    }, 120);
+    input.value = "";
+  }
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    ask(input.value);
   });
+
+  renderFollowups(defaults);
 </script>
 </body>
 </html>
