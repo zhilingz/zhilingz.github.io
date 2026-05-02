@@ -1,106 +1,120 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>张志凌 Zhiling Zhang</title>
-  <meta name="description" content="张志凌 Zhiling Zhang">
-  <style>
-    :root {
-      --bg: #121716;
-      --text: #d8d4cc;
-      --muted: #b5afa6;
-      --line: #5c5952;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: var(--bg);
-      color: var(--text);
-      font: 24px/1.65 Georgia, "Times New Roman", "Noto Serif SC", serif;
-    }
-    main {
-      width: min(570px, calc(100% - 48px));
-      margin: 0 auto;
-      padding: 84px 0 70px;
-    }
-    h1 {
-      margin: 0;
-      font-size: clamp(3rem, 10vw, 4.5rem);
-      line-height: 1.15;
-      font-weight: 400;
-      letter-spacing: 0;
-    }
-    .en {
-      margin: 4px 0 32px;
-      color: var(--muted);
-      font-size: clamp(2rem, 6vw, 3rem);
-      font-weight: 700;
-      letter-spacing: 0;
-    }
-    .links {
-      display: flex;
-      gap: 40px;
-      margin: 0 0 34px;
-      font: 26px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-    a {
-      color: var(--muted);
-      text-decoration: none;
-    }
-    a:hover { color: var(--text); }
-    .affiliation {
-      display: inline-block;
-      margin: 0 0 70px;
-      border-bottom: 1px solid var(--line);
-      color: var(--muted);
-      font: 26px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-    .agent {
-      width: fit-content;
-      margin: 0 auto;
-      color: var(--muted);
-      text-align: center;
-    }
-    .agent small {
-      display: block;
-      margin-bottom: -6px;
-      font-size: 12px;
-      letter-spacing: 0;
-    }
-    .agent a {
-      display: inline-block;
-      border-bottom: 1px solid var(--line);
-      font-size: 26px;
-    }
-    @media (max-width: 560px) {
-      body { font-size: 20px; }
-      main { width: min(100% - 32px, 570px); padding-top: 58px; }
-      .links { gap: 24px; font-size: 22px; }
-      .affiliation { font-size: 21px; }
-      .agent a { font-size: 23px; }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zhiling Zhang</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "Helvetica Neue", "Segoe UI", Arial, sans-serif;
+    background: #fff;
+    color: #222;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container {
+    text-align: center;
+    padding: 2rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .name-cn {
+    font-family: "Songti SC", "STSong", "SimSun", serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: #111;
+    letter-spacing: 0.2em;
+  }
+  .name-en {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #555;
+    margin-top: 0.4rem;
+    letter-spacing: 0.08em;
+  }
+  .role {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: #bbb;
+    margin-top: 1.2rem;
+    margin-bottom: 2.4rem;
+    letter-spacing: 0.04em;
+  }
+  .links {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+  }
+  .links a {
+    color: #bbb;
+    text-decoration: none;
+    font-family: -apple-system, "Helvetica Neue", "Segoe UI", sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+  .links a:hover { color: #555; }
+  .affiliation {
+    margin-top: 1.6rem;
+    font-size: 0.78rem;
+    color: #bbb;
+    letter-spacing: 0.03em;
+  }
+  .affiliation a {
+    color: #bbb;
+    text-decoration: none;
+    border-bottom: 1px solid #e8e8e8;
+    padding-bottom: 1px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .affiliation a:hover {
+    color: #666;
+    border-color: #999;
+  }
+  .chat { margin-top: 2.8rem; }
+  .chat a {
+    color: #999;
+    text-decoration: none;
+    font-family: "Songti SC", "STSong", "SimSun", serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .chat a:hover {
+    color: #444;
+    border-color: #999;
+  }
+  .chat ruby rt {
+    font-size: 0.5em;
+    color: #bbb;
+    letter-spacing: 0.06em;
+    font-weight: 400;
+  }
+</style>
 </head>
 <body>
-  <main>
-    <h1>张志凌</h1>
-    <p class="en">Zhiling Zhang</p>
-
-    <nav class="links" aria-label="links">
-      <a href="https://scholar.google.com/citations?user=A_vVS4gAAAAJ">Scholar</a>
-      <a href="https://github.com/zhilingz">GitHub</a>
-    </nav>
-
-    <a class="affiliation" href="https://www.bza.edu.cn/">北京中关村学院</a>
-    <span class="affiliation">×</span>
-    <a class="affiliation" href="https://www.ustc.edu.cn/">中国科学技术大学（博士联合培养）</a>
-
-    <div class="agent">
-      <small>Agent</small>
-      <a href="/chat/">与张志凌对话 →</a>
-    </div>
-  </main>
+<div class="container">
+  <div class="name-cn">张志凌</div>
+  <div class="name-en">Zhiling Zhang</div>
+  <div class="role">AI Security and Privacy</div>
+  <div class="links">
+    <a href="https://scholar.google.com/citations?user=A_vVS4gAAAAJ" target="_blank">Scholar</a>
+    <a href="https://github.com/zhilingz" target="_blank">GitHub</a>
+  </div>
+  <div class="affiliation"><a href="https://www.bza.edu.cn/" target="_blank">北京中关村学院</a> × <a href="https://www.ustc.edu.cn/" target="_blank">中国科学技术大学</a>（博士联合培养）</div>
+  <div class="chat"><a href="/chat/">与<ruby><strong>张志凌</strong><rt>Agent</rt></ruby>对话 →</a></div>
+</div>
 </body>
 </html>
