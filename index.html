@@ -1,132 +1,106 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Zhiling Zhang</title>
-  <meta name="description" content="Zhiling Zhang, PhD student in Cybersecurity at USTC.">
+  <title>张志凌 Zhiling Zhang</title>
+  <meta name="description" content="张志凌 Zhiling Zhang">
   <style>
     :root {
-      --bg: #fbfaf7;
-      --text: #111;
-      --muted: #666;
-      --line: #e7e2d8;
-      --link: #245f73;
+      --bg: #121716;
+      --text: #d8d4cc;
+      --muted: #b5afa6;
+      --line: #5c5952;
     }
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
     body {
       margin: 0;
+      min-height: 100vh;
       background: var(--bg);
       color: var(--text);
-      font: 16px/1.7 Georgia, "Times New Roman", "Noto Serif SC", serif;
+      font: 24px/1.65 Georgia, "Times New Roman", "Noto Serif SC", serif;
     }
-    a {
-      color: var(--link);
-      text-decoration: none;
-    }
-    a:hover { text-decoration: underline; }
-    .hero {
-      min-height: 100vh;
-      width: min(860px, calc(100% - 40px));
+    main {
+      width: min(570px, calc(100% - 48px));
       margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 48px 0;
+      padding: 84px 0 70px;
     }
     h1 {
       margin: 0;
-      font-size: clamp(3.8rem, 12vw, 8.5rem);
-      line-height: .9;
+      font-size: clamp(3rem, 10vw, 4.5rem);
+      line-height: 1.15;
       font-weight: 400;
       letter-spacing: 0;
     }
-    .cn {
-      margin: 20px 0 0;
+    .en {
+      margin: 4px 0 32px;
       color: var(--muted);
-      font-size: clamp(1.2rem, 3vw, 1.7rem);
-    }
-    .bio {
-      max-width: 680px;
-      margin: 36px 0 0;
-      font-size: clamp(1.05rem, 2vw, 1.28rem);
+      font-size: clamp(2rem, 6vw, 3rem);
+      font-weight: 700;
+      letter-spacing: 0;
     }
     .links {
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 34px;
+      gap: 40px;
+      margin: 0 0 34px;
+      font: 26px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    a {
       color: var(--muted);
+      text-decoration: none;
     }
-    .slash { color: #aaa; }
-    .section {
-      width: min(860px, calc(100% - 40px));
+    a:hover { color: var(--text); }
+    .affiliation {
+      display: inline-block;
+      margin: 0 0 70px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font: 26px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .agent {
+      width: fit-content;
       margin: 0 auto;
-      padding: 34px 0;
-      border-top: 1px solid var(--line);
+      color: var(--muted);
+      text-align: center;
     }
-    h2 {
-      margin: 0 0 18px;
-      font-size: 1.05rem;
-      font-weight: 600;
+    .agent small {
+      display: block;
+      margin-bottom: -6px;
+      font-size: 12px;
       letter-spacing: 0;
     }
-    .item { margin-bottom: 20px; }
-    .item:last-child { margin-bottom: 0; }
-    .item p { margin: 2px 0; color: var(--muted); }
-    footer {
-      width: min(860px, calc(100% - 40px));
-      margin: 0 auto;
-      padding: 30px 0 46px;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-      font-size: .95rem;
+    .agent a {
+      display: inline-block;
+      border-bottom: 1px solid var(--line);
+      font-size: 26px;
     }
     @media (max-width: 560px) {
-      .hero, .section, footer { width: min(100% - 28px, 860px); }
-      .hero { justify-content: flex-start; min-height: auto; padding-top: 68px; }
+      body { font-size: 20px; }
+      main { width: min(100% - 32px, 570px); padding-top: 58px; }
+      .links { gap: 24px; font-size: 22px; }
+      .affiliation { font-size: 21px; }
+      .agent a { font-size: 23px; }
     }
   </style>
 </head>
 <body>
   <main>
-    <section class="hero" aria-label="Intro">
-      <h1>Zhiling<br>Zhang</h1>
-      <p class="cn">张志凌</p>
-      <p class="bio">PhD student in Cybersecurity at the University of Science and Technology of China. I work on AI security and privacy, including facial privacy protection, privacy-preserving GUI agents, and robust watermarking.</p>
-      <nav class="links" aria-label="Links">
-        <a href="/chat/">Talk to me</a><span class="slash">/</span>
-        <a href="#education">Education</a><span class="slash">/</span>
-        <a href="#research">Research</a><span class="slash">/</span>
-        <a href="https://github.com/zhilingz">GitHub</a><span class="slash">/</span>
-        <a href="mailto:784405268@qq.com">Email</a><span class="slash">/</span>
-        <a href="/llms.txt">llms.txt</a>
-      </nav>
-    </section>
+    <h1>张志凌</h1>
+    <p class="en">Zhiling Zhang</p>
 
-    <section class="section" id="education">
-      <h2>Education</h2>
-      <div class="item">
-        <strong>PhD in Cybersecurity, USTC</strong>
-        <p>2025-2028. Joint training with Beijing Zhongguancun Academy.</p>
-        <p>Advisors: Jiyan He and Weiming Zhang.</p>
-      </div>
-      <div class="item">
-        <strong>MS in Cybersecurity, USTC</strong>
-        <p>2022-2025. Advisors: Weiming Zhang and Wenbo Zhou.</p>
-      </div>
-      <div class="item">
-        <strong>BS in Information Security, USTC</strong>
-        <p>2018-2022. GPA: 3.93 / 4.3.</p>
-      </div>
-    </section>
+    <nav class="links" aria-label="links">
+      <a href="https://scholar.google.com/citations?user=A_vVS4gAAAAJ">Scholar</a>
+      <a href="https://github.com/zhilingz">GitHub</a>
+    </nav>
 
-    <section class="section" id="research">
-      <h2>Research</h2>
-      <p>My current work focuses on security and privacy problems around AI systems. Publications and projects will be added after the first version of this homepage is online.</p>
-    </section>
+    <a class="affiliation" href="https://www.bza.edu.cn/">北京中关村学院</a>
+    <span class="affiliation">×</span>
+    <a class="affiliation" href="https://www.ustc.edu.cn/">中国科学技术大学（博士联合培养）</a>
+
+    <div class="agent">
+      <small>Agent</small>
+      <a href="/chat/">与张志凌对话 →</a>
+    </div>
   </main>
-  <footer>© Zhiling Zhang</footer>
 </body>
 </html>
