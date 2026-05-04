@@ -71,6 +71,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.7rem;
+    min-height: 3.4rem;
     padding: 0.2rem 0.4rem 0.9rem;
   }
   .followups button {
@@ -86,6 +87,10 @@
   .followups button:hover {
     color: #555;
     border-color: #ccc;
+  }
+  .followups button:disabled {
+    cursor: default;
+    opacity: 0.45;
   }
   .home {
     margin-top: 1.4rem;
@@ -219,13 +224,19 @@
     });
   }
 
+  function setFollowupsDisabled(disabled) {
+    followups.querySelectorAll("button").forEach((button) => {
+      button.disabled = disabled;
+    });
+  }
+
   function choose(label, target) {
     addMessage(label, "user");
     showNode(target);
   }
 
   function showNode(id) {
-    renderFollowups([]);
+    setFollowupsDisabled(true);
     const node = nodes[id] || nodes.entry;
     if (id !== "entry") answeredNodes.add(id);
     const waiting = document.createElement("div");
