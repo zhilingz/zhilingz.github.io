@@ -67,6 +67,16 @@
     border-top-right-radius: 4px;
     color: #444;
   }
+  .message a {
+    color: #999;
+    text-decoration: none;
+    border-bottom: 1px solid #e8e8e8;
+    padding-bottom: 1px;
+  }
+  .message a:hover {
+    color: #555;
+    border-color: #ccc;
+  }
   .followups {
     display: flex;
     flex-wrap: wrap;
@@ -189,7 +199,16 @@
     },
     joint: {
       text: "我的博士是北京中关村学院 × 中国科学技术大学联合培养。",
-      detail: "学院导师为何纪言，学校导师为张卫明。"
+      detail: "学院导师为何纪言，学校导师为张卫明。",
+      options: [
+        ["了解中关村学院", "bza"]
+      ]
+    },
+    bza: {
+      text: "北京中关村学院是教育部与北京市共建的新型高等教育机构，专注人工智能与交叉学科博士培养。",
+      links: [
+        ["官网", "https://www.bza.edu.cn/"]
+      ]
     },
     contact: {
       text: "可以通过邮箱 784405268@qq.com 联系我。",
@@ -205,10 +224,23 @@
   const messages = document.getElementById("messages");
   const followups = document.getElementById("followups");
 
-  function addMessage(text, type) {
+  function fillMessage(node, text, links = []) {
+    node.textContent = text;
+    links.forEach(([label, url]) => {
+      node.appendChild(document.createTextNode(" "));
+      const link = document.createElement("a");
+      link.href = url;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = label;
+      node.appendChild(link);
+    });
+  }
+
+  function addMessage(text, type, links = []) {
     const node = document.createElement("div");
     node.className = `message ${type}`;
-    node.textContent = text;
+    fillMessage(node, text, links);
     messages.appendChild(node);
     messages.scrollTop = messages.scrollHeight;
   }
@@ -246,7 +278,7 @@
     messages.scrollTop = messages.scrollHeight;
 
     setTimeout(() => {
-      waiting.textContent = node.text;
+      fillMessage(waiting, node.text, node.links || []);
       const options = node.options || initialOptions;
       renderFollowups(options);
     }, 1000);
