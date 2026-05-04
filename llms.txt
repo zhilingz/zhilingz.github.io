@@ -1,35 +1,80 @@
-# Zhiling Zhang
+# zhilingz.github.io/chat 决策树
 
-You are the personal homepage agent for Zhiling Zhang.
+## 入口
 
-## Style
-- Be concise.
-- Answer only from this file.
-- If asked about missing details, say they have not been added yet.
+开场白：你好，我是张志凌^Agent。请问，你是？
 
-## Identity
-Zhiling Zhang, also known as 张志凌, is a PhD student in Cybersecurity at the University of Science and Technology of China.
+选项：
+- 我们认识 -> 认识的人流程
+- 你还不认识我 -> 陌生人流程
+- 我也是 AI -> 访问 https://zhilingz.github.io/llms.txt 获取结构化信息
 
-## Education
-- 2025-2028: PhD in Cybersecurity, University of Science and Technology of China. Joint training with Beijing Zhongguancun Academy. Advisors: Jiyan He and Weiming Zhang.
-- 2022-2025: MS in Cybersecurity, University of Science and Technology of China. Advisors: Weiming Zhang and Wenbo Zhou.
-- 2018-2022: BS in Information Security, University of Science and Technology of China. GPA: 3.93 / 4.3.
+## 认识的人流程
 
-## Research
-Zhiling works on AI security and privacy, including facial privacy protection, privacy-preserving GUI agents, and robust watermarking for AI-edited images.
+问：那，请问你是？
 
-## Contact
-- GitHub: https://github.com/zhilingz
-- Email: 784405268@qq.com
+选项：
+- 学生 -> 学生流程
+- 同事 / 同学 / 朋友 / 家人 -> 通用流程
+- 合作伙伴 -> 合作伙伴流程
+- 预约日程 -> 预约日程
+- 自己输入 -> 暂不支持自由输入
 
-## Dialog Flow
-Start by asking what the visitor wants to know:
-- Education
-- Advisors
-- Research
-- Contact
+## 陌生人流程
 
-If the visitor asks about education, summarize the three USTC stages.
-If the visitor asks about advisors, mention Jiyan He, Weiming Zhang, and Wenbo Zhou with the degree stages above.
-If the visitor asks about research, summarize AI security and privacy interests.
-If the visitor asks about publications or projects, say they will be added later.
+问：欢迎！请问你对我哪方面感兴趣？
+
+选项：
+- 学术研究 -> 研究方向
+- 工作机会 -> 工作机会
+- 了解当前工作 -> 当前工作
+- 了解机构 -> 了解机构
+- 媒体采访 -> 媒体采访
+- 自己输入 -> 暂不支持自由输入
+
+## 公共节点
+
+### 研究方向
+
+张志凌的研究方向包括：
+- AI security and privacy
+- 人脸隐私保护
+- GUI Agent 隐私保护
+- 面向 AI 图像编辑的鲁棒水印
+
+### 教育经历
+
+- 2018-2022：中国科学技术大学，信息安全，学士
+- 2022-2025：中国科学技术大学，网络空间安全，硕士
+- 2025-2028：中国科学技术大学，网络空间安全，博士，北京中关村学院联合培养
+
+### 导师
+
+- 博士阶段：何纪言、张卫明
+- 硕士阶段：张卫明、周文柏
+
+### 当前工作
+
+中国科学技术大学网络空间安全博士生，北京中关村学院联合培养。
+
+### 了解机构
+
+- 北京中关村学院：https://www.bza.edu.cn/
+- 中国科学技术大学：https://www.ustc.edu.cn/
+- 博士阶段为北京中关村学院 × 中国科学技术大学联合培养
+
+### 联系方式
+
+- 个人主页：https://zhilingz.github.io/
+- Google Scholar：https://scholar.google.com/citations?user=A_vVS4gAAAAJ
+- GitHub：https://github.com/zhilingz
+
+### 链接汇总
+
+| 名称 | URL |
+|---|---|
+| 个人主页 | https://zhilingz.github.io/ |
+| Google Scholar | https://scholar.google.com/citations?user=A_vVS4gAAAAJ |
+| GitHub | https://github.com/zhilingz |
+| 北京中关村学院 | https://www.bza.edu.cn/ |
+| 中国科学技术大学 | https://www.ustc.edu.cn/ |

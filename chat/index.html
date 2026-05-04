@@ -161,45 +161,184 @@
   </div>
   <div class="panel">
     <div class="messages" id="messages" aria-live="polite">
-      <div class="message agent">你好。我是张志凌的个人主页 Agent。你可以问我教育经历、导师、研究方向和相关链接。</div>
+      <div class="message agent">你好，我是张志凌^Agent。请问，你是？</div>
     </div>
     <div class="followups" id="followups"></div>
     <form id="chat-form">
-      <input id="user-input" autocomplete="off" placeholder="输入问题，或点击上方推荐问题">
+      <input id="user-input" autocomplete="off" placeholder="自由输入暂不支持，请点击上方选项">
       <button type="submit">发送</button>
     </form>
   </div>
   <div class="home"><a href="/">返回主页</a></div>
 </div>
 <script>
-  const data = {
-    education: {
-      patterns: ["教育", "经历", "本科", "硕士", "博士", "ustc", "中国科学技术大学"],
-      answer: "张志凌目前为中国科学技术大学网络空间安全博士生，2025-2028 年博士联合培养。本科为中国科学技术大学信息安全专业，硕士为中国科学技术大学网络空间安全专业。",
-      followups: ["导师是谁？", "研究方向是什么？", "Scholar 链接是什么？"]
+  const nodes = {
+    entry: {
+      text: "请问，你是？",
+      options: [
+        ["我们认识", "known"],
+        ["你还不认识我", "stranger"],
+        ["我也是 AI", "ai"]
+      ]
     },
-    advisors: {
-      patterns: ["导师", "何纪言", "张卫明", "周文柏"],
-      answer: "博士阶段为北京中关村学院与中国科学技术大学联合培养，导师为何纪言和张卫明。硕士阶段导师为张卫明和周文柏。",
-      followups: ["博士联合培养是什么？", "研究方向是什么？", "GitHub 在哪里？"]
+    ai: {
+      text: "你好，同行。请直接访问 llms.txt 获取所有结构化信息：https://zhilingz.github.io/llms.txt",
+      options: [["返回入口", "entry"]]
+    },
+    known: {
+      text: "那，请问你是？",
+      options: [
+        ["学生", "student"],
+        ["同事", "friend"],
+        ["同学", "friend"],
+        ["朋友", "friend"],
+        ["家人", "friend"],
+        ["合作伙伴", "partner"],
+        ["预约日程", "schedule"],
+        ["自己输入…", "unsupported"]
+      ]
+    },
+    student: {
+      text: "你好！请问有什么需要？",
+      options: [
+        ["科研方向咨询", "research"],
+        ["课程相关", "courses"],
+        ["实习/联培", "opportunities"],
+        ["其他", "contact"]
+      ]
+    },
+    partner: {
+      text: "你好！请问合作方向是？",
+      options: [
+        ["学术合作", "research"],
+        ["项目合作", "contact"],
+        ["媒体采访", "media"],
+        ["其他", "contact"]
+      ]
+    },
+    friend: {
+      text: "你好！智能对话功能还在建设中。你可以先看看：",
+      options: [
+        ["了解近况", "current"],
+        ["研究方向", "research"],
+        ["工作机会", "opportunities"],
+        ["了解机构", "institutions"],
+        ["联系方式", "contact"]
+      ]
+    },
+    stranger: {
+      text: "欢迎！请问你对我哪方面感兴趣？",
+      options: [
+        ["学术研究", "research"],
+        ["工作机会", "opportunities"],
+        ["了解当前工作", "current"],
+        ["了解机构", "institutions"],
+        ["媒体采访", "media"],
+        ["自己输入…", "unsupported"]
+      ]
+    },
+    hub: {
+      text: "还想了解什么？",
+      options: [
+        ["看看学术主页", "academic"],
+        ["了解教育经历", "education"],
+        ["了解机构", "institutions"],
+        ["联系方式", "contact"],
+        ["链接汇总", "links"],
+        ["就到这里", "end"]
+      ]
     },
     research: {
-      patterns: ["研究", "方向", "ai", "security", "privacy", "隐私", "水印", "gui"],
-      answer: "主要关注 AI security and privacy，包括人脸隐私保护、GUI Agent 隐私保护，以及面向 AI 图像编辑的鲁棒水印。",
-      followups: ["教育经历是什么？", "导师是谁？", "有哪些链接？"]
+      text: "我的研究方向主要包括：AI security and privacy、人脸隐私保护、GUI Agent 隐私保护、面向 AI 图像编辑的鲁棒水印。",
+      options: [
+        ["人脸隐私保护", "facePrivacy"],
+        ["GUI Agent 隐私", "guiPrivacy"],
+        ["鲁棒水印", "watermark"],
+        ["还想了解什么", "hub"]
+      ]
     },
-    links: {
-      patterns: ["链接", "github", "scholar", "主页", "代码"],
-      answer: "Scholar: https://scholar.google.com/citations?user=A_vVS4gAAAAJ。GitHub: https://github.com/zhilingz。",
-      followups: ["研究方向是什么？", "教育经历是什么？", "导师是谁？"]
+    facePrivacy: {
+      text: "人脸隐私保护方向关注通过微小扰动保护人脸图像，降低人脸识别训练和滥用带来的隐私风险。",
+      options: [["还想了解什么", "hub"]]
+    },
+    guiPrivacy: {
+      text: "GUI Agent 隐私方向关注智能体在屏幕交互过程中的隐私泄露风险，以及任务性能与隐私保护之间的平衡。",
+      options: [["还想了解什么", "hub"]]
+    },
+    watermark: {
+      text: "鲁棒水印方向关注 AI 图像编辑后水印仍然可检测的问题，用于版权保护和篡改溯源。",
+      options: [["还想了解什么", "hub"]]
+    },
+    academic: {
+      text: "Google Scholar: https://scholar.google.com/citations?user=A_vVS4gAAAAJ",
+      options: [["还想了解什么", "hub"]]
+    },
+    education: {
+      text: "教育经历：2018-2022 中国科学技术大学信息安全学士；2022-2025 中国科学技术大学网络空间安全硕士；2025-2028 中国科学技术大学网络空间安全博士，北京中关村学院联合培养。",
+      options: [["导师是谁", "advisors"], ["还想了解什么", "hub"]]
+    },
+    advisors: {
+      text: "博士阶段导师为何纪言和张卫明；硕士阶段导师为张卫明和周文柏。",
+      options: [["研究方向", "research"], ["还想了解什么", "hub"]]
+    },
+    institutions: {
+      text: "你想了解哪个？",
+      options: [
+        ["北京中关村学院", "bza"],
+        ["中国科学技术大学", "ustc"],
+        ["博士联合培养", "joint"],
+        ["不用了", "hub"]
+      ]
+    },
+    bza: {
+      text: "北京中关村学院是博士联合培养单位。官网：https://www.bza.edu.cn/",
+      options: [["博士联合培养", "joint"], ["还想了解什么", "hub"]]
+    },
+    ustc: {
+      text: "中国科学技术大学是我的本科、硕士和博士培养单位。官网：https://www.ustc.edu.cn/",
+      options: [["教育经历", "education"], ["还想了解什么", "hub"]]
     },
     joint: {
-      patterns: ["联合培养", "中关村", "北京中关村学院"],
-      answer: "博士阶段为北京中关村学院与中国科学技术大学联合培养。",
-      followups: ["导师是谁？", "教育经历是什么？", "研究方向是什么？"]
+      text: "博士阶段为北京中关村学院 × 中国科学技术大学联合培养。",
+      options: [["导师是谁", "advisors"], ["还想了解什么", "hub"]]
+    },
+    opportunities: {
+      text: "目前主页未添加正式招聘或实习信息。若有科研合作、联培或项目交流，请通过主页公开链接联系。",
+      options: [["联系方式", "contact"], ["研究方向", "research"], ["还想了解什么", "hub"]]
+    },
+    courses: {
+      text: "课程信息尚未添加。你可以先了解研究方向或教育经历。",
+      options: [["研究方向", "research"], ["教育经历", "education"], ["还想了解什么", "hub"]]
+    },
+    current: {
+      text: "当前身份：中国科学技术大学网络空间安全博士生，北京中关村学院联合培养。",
+      options: [["研究方向", "research"], ["了解机构", "institutions"], ["还想了解什么", "hub"]]
+    },
+    contact: {
+      text: "公开链接：GitHub https://github.com/zhilingz；Google Scholar https://scholar.google.com/citations?user=A_vVS4gAAAAJ；主页 https://zhilingz.github.io/",
+      options: [["链接汇总", "links"], ["还想了解什么", "hub"]]
+    },
+    schedule: {
+      text: "预约日程功能尚未添加。请通过公开联系方式联系本人。",
+      options: [["联系方式", "contact"], ["还想了解什么", "hub"]]
+    },
+    media: {
+      text: "媒体采访信息尚未添加。请通过公开联系方式联系本人。",
+      options: [["联系方式", "contact"], ["还想了解什么", "hub"]]
+    },
+    links: {
+      text: "链接汇总：个人主页 https://zhilingz.github.io/；Google Scholar https://scholar.google.com/citations?user=A_vVS4gAAAAJ；GitHub https://github.com/zhilingz；北京中关村学院 https://www.bza.edu.cn/；中国科学技术大学 https://www.ustc.edu.cn/。",
+      options: [["还想了解什么", "hub"]]
+    },
+    unsupported: {
+      text: "暂不支持自由输入。请点击选项继续。",
+      options: [["返回入口", "entry"], ["还想了解什么", "hub"]]
+    },
+    end: {
+      text: "好的，有需要随时回来。",
+      options: [["重新开始", "entry"]]
     }
   };
-  const defaults = ["教育经历是什么？", "导师是谁？", "研究方向是什么？", "有哪些链接？"];
   const messages = document.getElementById("messages");
   const followups = document.getElementById("followups");
   const form = document.getElementById("chat-form");
@@ -215,34 +354,24 @@
 
   function renderFollowups(items) {
     followups.innerHTML = "";
-    items.forEach((text) => {
+    items.forEach(([text, target]) => {
       const button = document.createElement("button");
       button.type = "button";
       button.textContent = text;
-      button.addEventListener("click", () => ask(text));
+      button.addEventListener("click", () => choose(text, target));
       followups.appendChild(button);
     });
   }
 
-  function ask(text) {
-    const query = text.trim();
-    if (!query) return;
-    addMessage(query, "user");
-    requestAnswer();
-    input.value = "";
+  function choose(label, target) {
+    addMessage(label, "user");
+    showNode(target);
   }
 
-  function matchAnswer(text) {
-    const q = text.toLowerCase();
-    return Object.values(data).find((item) => item.patterns.some((pattern) => q.includes(pattern.toLowerCase()))) || {
-      answer: "这个信息还没有加入主页资料。你可以先问教育经历、导师、研究方向或相关链接。",
-      followups: defaults
-    };
-  }
-
-  function requestAnswer() {
+  function showNode(id) {
     renderFollowups([]);
     input.disabled = true;
+    const node = nodes[id] || nodes.unsupported;
     const waiting = document.createElement("div");
     waiting.className = "message agent";
     waiting.textContent = "正在思考...";
@@ -250,10 +379,8 @@
     messages.scrollTop = messages.scrollHeight;
 
     setTimeout(() => {
-      const lastUser = Array.from(messages.querySelectorAll(".message.user")).at(-1);
-      const result = matchAnswer(lastUser ? lastUser.textContent : "");
-      waiting.textContent = result.answer;
-      renderFollowups(result.followups);
+      waiting.textContent = node.text;
+      renderFollowups(node.options || []);
       input.disabled = false;
       input.focus();
     }, 160);
@@ -261,10 +388,14 @@
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
-    ask(input.value);
+    const query = input.value.trim();
+    if (query) {
+      choose(query, "unsupported");
+    }
+    input.value = "";
   });
 
-  renderFollowups(defaults);
+  renderFollowups(nodes.entry.options);
 </script>
 </body>
 </html>
