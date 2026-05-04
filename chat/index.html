@@ -105,30 +105,6 @@
     color: #555;
     border-color: #ccc;
   }
-  form {
-    display: flex;
-    gap: 0.7rem;
-    border-top: 1px solid #f2f2f2;
-    padding: 0.9rem 0.4rem 0;
-  }
-  input {
-    flex: 1;
-    min-width: 0;
-    border: 0;
-    outline: 0;
-    color: #555;
-    font: 0.86rem/1.5 -apple-system, "Helvetica Neue", "Segoe UI", sans-serif;
-  }
-  input::placeholder { color: #c8c8c8; }
-  form button {
-    border: 0;
-    background: transparent;
-    color: #999;
-    cursor: pointer;
-    font: 0.82rem/1.5 -apple-system, "Helvetica Neue", "Segoe UI", sans-serif;
-    transition: color 0.2s;
-  }
-  form button:hover { color: #444; }
   .home {
     margin-top: 1.4rem;
     text-align: center;
@@ -164,10 +140,6 @@
       <div class="message agent">你好，我是张志凌^Agent。你想询问什么内容？</div>
     </div>
     <div class="followups" id="followups"></div>
-    <form id="chat-form">
-      <input id="user-input" autocomplete="off" placeholder="自由输入暂不支持，请点击上方推荐问题">
-      <button type="submit">发送</button>
-    </form>
   </div>
   <div class="home"><a href="/">返回主页</a></div>
 </div>
@@ -242,17 +214,11 @@
       text: "兴趣爱好暂未添加公开信息。",
       detail: "我先只展示资料中可核对的教育、研究、联培和联系方式。"
     },
-    unsupported: {
-      text: "暂不支持自由输入。",
-      detail: "请点击推荐问题继续了解。"
-    }
   };
   const initialOptions = nodes.entry.options;
   const answeredNodes = new Set();
   const messages = document.getElementById("messages");
   const followups = document.getElementById("followups");
-  const form = document.getElementById("chat-form");
-  const input = document.getElementById("user-input");
 
   function addMessage(text, type) {
     const node = document.createElement("div");
@@ -280,9 +246,8 @@
 
   function showNode(id) {
     renderFollowups([]);
-    input.disabled = true;
-    const node = nodes[id] || nodes.unsupported;
-    if (id !== "entry" && id !== "unsupported") answeredNodes.add(id);
+    const node = nodes[id] || nodes.entry;
+    if (id !== "entry") answeredNodes.add(id);
     const waiting = document.createElement("div");
     waiting.className = "message agent";
     waiting.textContent = "正在思考...";
@@ -293,19 +258,8 @@
       waiting.textContent = node.text;
       const options = node.options || initialOptions;
       renderFollowups(options);
-      input.disabled = false;
-      input.focus();
     }, 1000);
   }
-
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const query = input.value.trim();
-    if (query) {
-      choose(query, "unsupported");
-    }
-    input.value = "";
-  });
 
   renderFollowups(initialOptions);
 </script>
