@@ -224,6 +224,7 @@
   const answeredNodes = new Set();
   const messages = document.getElementById("messages");
   const followups = document.getElementById("followups");
+  const TYPE_INTERVAL = 45;
 
   function fillMessage(node, text, links = []) {
     node.textContent = text;
@@ -244,6 +245,21 @@
     fillMessage(node, text, links);
     messages.appendChild(node);
     messages.scrollTop = messages.scrollHeight;
+  }
+
+  function typeMessage(node, text, links, onDone) {
+    let index = 0;
+    node.textContent = "";
+    const timer = setInterval(() => {
+      node.textContent += text[index] || "";
+      index += 1;
+      messages.scrollTop = messages.scrollHeight;
+      if (index >= text.length) {
+        clearInterval(timer);
+        fillMessage(node, text, links);
+        onDone();
+      }
+    }, TYPE_INTERVAL);
   }
 
   function renderFollowups(items) {
@@ -279,9 +295,10 @@
     messages.scrollTop = messages.scrollHeight;
 
     setTimeout(() => {
-      fillMessage(waiting, node.text, node.links || []);
-      const options = node.options || initialOptions;
-      renderFollowups(options);
+      typeMessage(waiting, node.text, node.links || [], () => {
+        const options = node.options || initialOptions;
+        renderFollowups(options);
+      });
     }, 1000);
   }
 
