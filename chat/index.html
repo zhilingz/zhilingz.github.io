@@ -161,11 +161,11 @@
   </div>
   <div class="panel">
     <div class="messages" id="messages" aria-live="polite">
-      <div class="message agent">你好，我是张志凌^Agent。请问，你是？</div>
+      <div class="message agent">你好，我是张志凌^Agent。你想询问什么内容？</div>
     </div>
     <div class="followups" id="followups"></div>
     <form id="chat-form">
-      <input id="user-input" autocomplete="off" placeholder="自由输入暂不支持，请点击上方选项">
+      <input id="user-input" autocomplete="off" placeholder="自由输入暂不支持，请点击上方推荐问题">
       <button type="submit">发送</button>
     </form>
   </div>
@@ -174,171 +174,81 @@
 <script>
   const nodes = {
     entry: {
-      text: "请问，你是？",
+      text: "你想询问什么内容？",
       options: [
-        ["我们认识", "known"],
-        ["你还不认识我", "stranger"],
-        ["我也是 AI", "ai"]
-      ]
-    },
-    ai: {
-      text: "你好，同行。请直接访问 llms.txt 获取所有结构化信息：https://zhilingz.github.io/llms.txt",
-      options: [["返回入口", "entry"]]
-    },
-    known: {
-      text: "那，请问你是？",
-      options: [
-        ["学生", "student"],
-        ["同事", "friend"],
-        ["同学", "friend"],
-        ["朋友", "friend"],
-        ["家人", "friend"],
-        ["合作伙伴", "partner"],
-        ["预约日程", "schedule"],
-        ["自己输入…", "unsupported"]
-      ]
-    },
-    student: {
-      text: "你好！请问有什么需要？",
-      options: [
-        ["科研方向咨询", "research"],
-        ["课程相关", "courses"],
-        ["实习/联培", "opportunities"],
-        ["其他", "contact"]
-      ]
-    },
-    partner: {
-      text: "你好！请问合作方向是？",
-      options: [
-        ["学术合作", "research"],
-        ["项目合作", "contact"],
-        ["媒体采访", "media"],
-        ["其他", "contact"]
-      ]
-    },
-    friend: {
-      text: "你好！智能对话功能还在建设中。你可以先看看：",
-      options: [
-        ["了解近况", "current"],
+        ["教育经历", "education"],
         ["研究方向", "research"],
-        ["工作机会", "opportunities"],
-        ["了解机构", "institutions"],
+        ["兴趣爱好", "hobbies"],
+        ["联培项目", "joint"],
         ["联系方式", "contact"]
       ]
     },
-    stranger: {
-      text: "欢迎！请问你对我哪方面感兴趣？",
-      options: [
-        ["学术研究", "research"],
-        ["工作机会", "opportunities"],
-        ["了解当前工作", "current"],
-        ["了解机构", "institutions"],
-        ["媒体采访", "media"],
-        ["自己输入…", "unsupported"]
-      ]
-    },
-    hub: {
-      text: "还想了解什么？",
-      options: [
-        ["看看学术主页", "academic"],
-        ["了解教育经历", "education"],
-        ["了解机构", "institutions"],
-        ["联系方式", "contact"],
-        ["链接汇总", "links"],
-        ["就到这里", "end"]
-      ]
-    },
     research: {
-      text: "我的研究方向主要包括：AI security and privacy、人脸隐私保护、GUI Agent 隐私保护、面向 AI 图像编辑的鲁棒水印。",
+      text: "我的研究方向是 AI 安全与隐私。",
+      detail: "具体包括人脸隐私保护、GUI Agent 隐私保护，以及面向 AI 图像编辑的鲁棒水印。",
       options: [
         ["人脸隐私保护", "facePrivacy"],
-        ["GUI Agent 隐私", "guiPrivacy"],
-        ["鲁棒水印", "watermark"],
-        ["还想了解什么", "hub"]
+        ["GUI Agent 隐私保护", "guiPrivacy"],
+        ["鲁棒水印", "watermark"]
       ]
     },
     facePrivacy: {
-      text: "人脸隐私保护方向关注通过微小扰动保护人脸图像，降低人脸识别训练和滥用带来的隐私风险。",
-      options: [["还想了解什么", "hub"]]
+      text: "人脸隐私保护研究通过微小扰动降低人脸数据被未授权训练的风险。",
+      detail: "我的 Segue 工作关注真实场景中的效率、迁移性和鲁棒性。"
     },
     guiPrivacy: {
-      text: "GUI Agent 隐私方向关注智能体在屏幕交互过程中的隐私泄露风险，以及任务性能与隐私保护之间的平衡。",
-      options: [["还想了解什么", "hub"]]
+      text: "GUI Agent 隐私保护关注屏幕交互中的敏感信息泄露。",
+      detail: "GUIGuard-Bench 用轨迹和截图评估隐私识别、防护与任务执行之间的权衡。"
     },
     watermark: {
-      text: "鲁棒水印方向关注 AI 图像编辑后水印仍然可检测的问题，用于版权保护和篡改溯源。",
-      options: [["还想了解什么", "hub"]]
-    },
-    academic: {
-      text: "Google Scholar: https://scholar.google.com/citations?user=A_vVS4gAAAAJ",
-      options: [["还想了解什么", "hub"]]
+      text: "鲁棒水印研究关注图像经过大模型编辑后仍能保留版权标记。",
+      detail: "这个方向用于版权保护和恶意篡改溯源。"
     },
     education: {
-      text: "教育经历：2018-2022 中国科学技术大学信息安全学士；2022-2025 中国科学技术大学网络空间安全硕士；2025-2028 中国科学技术大学网络空间安全博士，北京中关村学院联合培养。",
-      options: [["导师是谁", "advisors"], ["还想了解什么", "hub"]]
-    },
-    advisors: {
-      text: "博士阶段导师为何纪言和张卫明；硕士阶段导师为张卫明和周文柏。",
-      options: [["研究方向", "research"], ["还想了解什么", "hub"]]
-    },
-    institutions: {
-      text: "你想了解哪个？",
+      text: "我目前是中国科学技术大学网络空间安全博士生。",
+      detail: "本科是中国科学技术大学信息安全专业，硕士是中国科学技术大学网络空间安全专业。",
       options: [
-        ["北京中关村学院", "bza"],
-        ["中国科学技术大学", "ustc"],
-        ["博士联合培养", "joint"],
-        ["不用了", "hub"]
+        ["本科经历", "undergraduate"],
+        ["硕士经历", "master"],
+        ["博士经历", "phd"],
+        ["导师信息", "advisors"]
       ]
     },
-    bza: {
-      text: "北京中关村学院是博士联合培养单位。官网：https://www.bza.edu.cn/",
-      options: [["博士联合培养", "joint"], ["还想了解什么", "hub"]]
+    undergraduate: {
+      text: "本科阶段我在中国科学技术大学学习信息安全。",
+      detail: "时间是 2018-2022，GPA 为 3.93 / 4.3。"
     },
-    ustc: {
-      text: "中国科学技术大学是我的本科、硕士和博士培养单位。官网：https://www.ustc.edu.cn/",
-      options: [["教育经历", "education"], ["还想了解什么", "hub"]]
+    master: {
+      text: "硕士阶段我在中国科学技术大学学习网络空间安全。",
+      detail: "时间是 2022-2025，导师为张卫明和周文柏。"
+    },
+    phd: {
+      text: "博士阶段我在中国科学技术大学攻读网络空间安全。",
+      detail: "时间是 2025-2028，为北京中关村学院联合培养。"
+    },
+    advisors: {
+      text: "博士阶段导师为何纪言和张卫明。",
+      detail: "硕士阶段导师为张卫明和周文柏。"
     },
     joint: {
-      text: "博士阶段为北京中关村学院 × 中国科学技术大学联合培养。",
-      options: [["导师是谁", "advisors"], ["还想了解什么", "hub"]]
-    },
-    opportunities: {
-      text: "目前主页未添加正式招聘或实习信息。若有科研合作、联培或项目交流，请通过主页公开链接联系。",
-      options: [["联系方式", "contact"], ["研究方向", "research"], ["还想了解什么", "hub"]]
-    },
-    courses: {
-      text: "课程信息尚未添加。你可以先了解研究方向或教育经历。",
-      options: [["研究方向", "research"], ["教育经历", "education"], ["还想了解什么", "hub"]]
-    },
-    current: {
-      text: "当前身份：中国科学技术大学网络空间安全博士生，北京中关村学院联合培养。",
-      options: [["研究方向", "research"], ["了解机构", "institutions"], ["还想了解什么", "hub"]]
+      text: "我的博士是北京中关村学院 × 中国科学技术大学联合培养。",
+      detail: "学院导师为何纪言，学校导师为张卫明。"
     },
     contact: {
-      text: "公开链接：GitHub https://github.com/zhilingz；Google Scholar https://scholar.google.com/citations?user=A_vVS4gAAAAJ；主页 https://zhilingz.github.io/",
-      options: [["链接汇总", "links"], ["还想了解什么", "hub"]]
+      text: "可以通过邮箱 784405268@qq.com 联系我。",
+      detail: "也可以访问 GitHub https://github.com/zhilingz 或 Google Scholar https://scholar.google.com/citations?user=A_vVS4gAAAAJ。"
     },
-    schedule: {
-      text: "预约日程功能尚未添加。请通过公开联系方式联系本人。",
-      options: [["联系方式", "contact"], ["还想了解什么", "hub"]]
-    },
-    media: {
-      text: "媒体采访信息尚未添加。请通过公开联系方式联系本人。",
-      options: [["联系方式", "contact"], ["还想了解什么", "hub"]]
-    },
-    links: {
-      text: "链接汇总：个人主页 https://zhilingz.github.io/；Google Scholar https://scholar.google.com/citations?user=A_vVS4gAAAAJ；GitHub https://github.com/zhilingz；北京中关村学院 https://www.bza.edu.cn/；中国科学技术大学 https://www.ustc.edu.cn/。",
-      options: [["还想了解什么", "hub"]]
+    hobbies: {
+      text: "兴趣爱好暂未添加公开信息。",
+      detail: "我先只展示资料中可核对的教育、研究、联培和联系方式。"
     },
     unsupported: {
-      text: "暂不支持自由输入。请点击选项继续。",
-      options: [["返回入口", "entry"], ["还想了解什么", "hub"]]
-    },
-    end: {
-      text: "好的，有需要随时回来。",
-      options: [["重新开始", "entry"]]
+      text: "暂不支持自由输入。",
+      detail: "请点击推荐问题继续了解。"
     }
   };
+  const initialOptions = nodes.entry.options;
+  const answeredNodes = new Set();
   const messages = document.getElementById("messages");
   const followups = document.getElementById("followups");
   const form = document.getElementById("chat-form");
@@ -354,7 +264,7 @@
 
   function renderFollowups(items) {
     followups.innerHTML = "";
-    items.forEach(([text, target]) => {
+    items.filter(([, target]) => target === "entry" || !answeredNodes.has(target)).forEach(([text, target]) => {
       const button = document.createElement("button");
       button.type = "button";
       button.textContent = text;
@@ -372,6 +282,7 @@
     renderFollowups([]);
     input.disabled = true;
     const node = nodes[id] || nodes.unsupported;
+    if (id !== "entry" && id !== "unsupported") answeredNodes.add(id);
     const waiting = document.createElement("div");
     waiting.className = "message agent";
     waiting.textContent = "正在思考...";
@@ -380,7 +291,8 @@
 
     setTimeout(() => {
       waiting.textContent = node.text;
-      renderFollowups(node.options || []);
+      const options = node.options || initialOptions;
+      renderFollowups(options);
       input.disabled = false;
       input.focus();
     }, 160);
@@ -395,7 +307,7 @@
     input.value = "";
   });
 
-  renderFollowups(nodes.entry.options);
+  renderFollowups(initialOptions);
 </script>
 </body>
 </html>

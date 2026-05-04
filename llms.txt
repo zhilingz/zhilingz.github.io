@@ -1,80 +1,62 @@
-# zhilingz.github.io/chat 决策树
+# zhilingz.github.io/chat 静态对话树
 
 ## 入口
 
-开场白：你好，我是张志凌^Agent。请问，你是？
+开场白：你好，我是张志凌^Agent。你想询问什么内容？
 
 选项：
-- 我们认识 -> 认识的人流程
-- 你还不认识我 -> 陌生人流程
-- 我也是 AI -> 访问 https://zhilingz.github.io/llms.txt 获取结构化信息
+- 教育经历
+- 研究方向
+- 兴趣爱好
+- 联培项目
+- 联系方式
 
-## 认识的人流程
+每个节点先回复一句话，再给出可继续展开的问题；已经回答过的问题不再出现在推荐问题框中。
 
-问：那，请问你是？
+## 教育经历
 
-选项：
-- 学生 -> 学生流程
-- 同事 / 同学 / 朋友 / 家人 -> 通用流程
-- 合作伙伴 -> 合作伙伴流程
-- 预约日程 -> 预约日程
-- 自己输入 -> 暂不支持自由输入
+回复：我目前是中国科学技术大学网络空间安全博士生。
 
-## 陌生人流程
+展开：
+- 本科经历：本科阶段我在中国科学技术大学学习信息安全。
+- 硕士经历：硕士阶段我在中国科学技术大学学习网络空间安全。
+- 博士经历：博士阶段我在中国科学技术大学攻读网络空间安全。
+- 导师信息：博士阶段导师为何纪言和张卫明。
 
-问：欢迎！请问你对我哪方面感兴趣？
+## 研究方向
 
-选项：
-- 学术研究 -> 研究方向
-- 工作机会 -> 工作机会
-- 了解当前工作 -> 当前工作
-- 了解机构 -> 了解机构
-- 媒体采访 -> 媒体采访
-- 自己输入 -> 暂不支持自由输入
+回复：我的研究方向是 AI 安全与隐私。
 
-## 公共节点
+展开：
+- 人脸隐私保护：人脸隐私保护研究通过微小扰动降低人脸数据被未授权训练的风险。
+- GUI Agent 隐私保护：GUI Agent 隐私保护关注屏幕交互中的敏感信息泄露。
+- 鲁棒水印：鲁棒水印研究关注图像经过大模型编辑后仍能保留版权标记。
 
-### 研究方向
+## 兴趣爱好
 
-张志凌的研究方向包括：
-- AI security and privacy
-- 人脸隐私保护
-- GUI Agent 隐私保护
-- 面向 AI 图像编辑的鲁棒水印
+回复：兴趣爱好暂未添加公开信息。
 
-### 教育经历
+说明：不编造资料中没有的信息。
 
-- 2018-2022：中国科学技术大学，信息安全，学士
-- 2022-2025：中国科学技术大学，网络空间安全，硕士
-- 2025-2028：中国科学技术大学，网络空间安全，博士，北京中关村学院联合培养
+## 联培项目
 
-### 导师
+回复：我的博士是北京中关村学院 × 中国科学技术大学联合培养。
 
-- 博士阶段：何纪言、张卫明
-- 硕士阶段：张卫明、周文柏
+展开：
+- 学院导师为何纪言。
+- 学校导师为张卫明。
 
-### 当前工作
+## 联系方式
 
-中国科学技术大学网络空间安全博士生，北京中关村学院联合培养。
+回复：可以通过邮箱 784405268@qq.com 联系我。
 
-### 了解机构
-
-- 北京中关村学院：https://www.bza.edu.cn/
-- 中国科学技术大学：https://www.ustc.edu.cn/
-- 博士阶段为北京中关村学院 × 中国科学技术大学联合培养
-
-### 联系方式
-
-- 个人主页：https://zhilingz.github.io/
-- Google Scholar：https://scholar.google.com/citations?user=A_vVS4gAAAAJ
+展开：
 - GitHub：https://github.com/zhilingz
+- Google Scholar：https://scholar.google.com/citations?user=A_vVS4gAAAAJ
+- 主页：https://zhilingz.github.io/
 
-### 链接汇总
+## 公开资料来源
 
-| 名称 | URL |
-|---|---|
-| 个人主页 | https://zhilingz.github.io/ |
-| Google Scholar | https://scholar.google.com/citations?user=A_vVS4gAAAAJ |
-| GitHub | https://github.com/zhilingz |
-| 北京中关村学院 | https://www.bza.edu.cn/ |
-| 中国科学技术大学 | https://www.ustc.edu.cn/ |
+- `/home/zq/zzl/file/profile/张志凌简历.pdf`
+- `/home/zq/zzl/file/profile/GUIGuard_bench.pdf`
+- `/home/zq/zzl/file/profile/Segue_Side-information_Guided_Generative_Unlearnable_Examples_for_Facial_Privacy_Protection_in_Real_World.pdf`
