@@ -73,7 +73,7 @@
     font-size: 0.86rem;
     line-height: 1.75;
     color: #666;
-    animation: slideIn 0.28s ease both;
+    animation: slideIn 1s ease both;
   }
   .message.agent {
     background: #fafafa;
@@ -295,7 +295,7 @@
       renderFollowups(options);
       input.disabled = false;
       input.focus();
-    }, 160);
+    }, 1000);
   }
 
   form.addEventListener("submit", (event) => {
