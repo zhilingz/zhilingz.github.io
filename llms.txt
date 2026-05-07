@@ -30,6 +30,7 @@
 展开：
 - 人脸隐私保护：人脸隐私保护研究通过微小扰动降低人脸数据被未授权训练的风险。
 - GUI Agent 隐私保护：GUI Agent 隐私保护关注屏幕交互中的敏感信息泄露。
+- GUIGuard 项目：https://futuresis.github.io/GUIGuard-page/
 - 鲁棒水印：鲁棒水印研究关注图像经过大模型编辑后仍能保留版权标记。
 
 ## 兴趣爱好
